@@ -9,6 +9,15 @@ buildscript {
 apply plugin: 'com.android.library'
 apply plugin: 'robolectric'
 
+def versionMajor = 0
+def versionMinor = 1
+def versionPatch = 0
+def versionBuild = 0
+
+def versionBuildCode = versionMajor * 10000 + versionMinor * 1000 + versionPatch * 100 + versionBuild
+def versionBuildName = "${versionMajor}.${versionMinor}" + (versionPatch == 0 ? "" : ".${versionPatch}")
+
+
 android {
     compileSdkVersion 20
     buildToolsVersion "20.0.0"
@@ -17,8 +26,8 @@ android {
         applicationId "net.beshkenadze.dozer.library"
         minSdkVersion 15
         targetSdkVersion 20
-        versionCode 1
-        versionName "1.0"
+        versionCode versionBuildCode
+        versionName versionBuildName
     }
     buildTypes {
         release {
