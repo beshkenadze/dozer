@@ -125,8 +125,33 @@ public class DozerSyntaxTest {
     }
 
     @Test
-    public void testWhere() throws Exception {
+    public void testEq() throws Exception {
         assertThat(new Dozer().from(mTableName).eq("id", "1").toSql()).isEqualToIgnoringCase("select * from countries where id = '1'");
+    }
+
+    @Test
+    public void testNe() throws Exception {
+        assertThat(new Dozer().from(mTableName).ne("id", "1").toSql()).isEqualToIgnoringCase("select * from countries where id != '1'");
+    }
+
+    @Test
+    public void testGt() throws Exception {
+        assertThat(new Dozer().from(mTableName).gt("id", "1").toSql()).isEqualToIgnoringCase("select * from countries where id > '1'");
+    }
+
+    @Test
+    public void testLt() throws Exception {
+        assertThat(new Dozer().from(mTableName).lt("id", "1").toSql()).isEqualToIgnoringCase("select * from countries where id < '1'");
+    }
+
+    @Test
+    public void testGte() throws Exception {
+        assertThat(new Dozer().from(mTableName).gte("id", "1").toSql()).isEqualToIgnoringCase("select * from countries where id >= '1'");
+    }
+
+    @Test
+    public void testLte() throws Exception {
+        assertThat(new Dozer().from(mTableName).lte("id", "1").toSql()).isEqualToIgnoringCase("select * from countries where id <= '1'");
     }
 
     @Test
