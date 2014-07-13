@@ -125,6 +125,11 @@ public class DozerSyntaxTest {
     }
 
     @Test
+    public void testIn() throws Exception {
+        assertThat(new Dozer().from(mTableName).in("id", new String[]{"1", "2"}).toSql()).isEqualToIgnoringCase("select * from countries where id in ( '1', '2' )");
+    }
+
+    @Test
     public void testEq() throws Exception {
         assertThat(new Dozer().from(mTableName).eq("id", "1").toSql()).isEqualToIgnoringCase("select * from countries where id = '1'");
     }

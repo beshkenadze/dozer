@@ -6,11 +6,11 @@ import net.beshkenadze.dozer.library.parts.DefaultCondition;
  * Created by Aleksandr Beshkenadze <beshkenadze@gmail.com> on 08.03.14.
  */
 public class Eq extends DefaultCondition {
-    public Eq(String target, String value) {
-        super(target, " = ", value);
+    public Eq(String field, String value) {
+        super(field, " = ", value);
     }
 
-    public static Eq from(String target, String value) {
-        return new Eq(target, value);
+    public static Eq from(String field, String value) {
+        return new Eq(field, value);
     }
 }

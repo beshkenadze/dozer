@@ -4,14 +4,17 @@ import android.database.DatabaseUtils;
 import android.text.TextUtils;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 /**
  * Created by Aleksandr Beshkenadze <beshkenadze@gmail.com> on 12.07.14.
  */
 public class DefaultCondition {
-    public DefaultCondition(String target, String tag, String value) {
-        addField(target, tag, value);
+    public DefaultCondition(String field, String tag, String value) {
+        addField(field, tag, value);
+    }
+
+    public DefaultCondition(String field, String tag, String value, boolean skipEscape) {
+        addField(field, tag, value, skipEscape);
     }
 
     public DefaultCondition() {
@@ -20,6 +23,10 @@ public class DefaultCondition {
 
     public static DefaultCondition from(String target, String tag, String value) {
         return new DefaultCondition(target, tag, value);
+    }
+
+    public static DefaultCondition from(String target, String tag, String value, boolean skipEscape) {
+        return new DefaultCondition(target, tag, value, skipEscape);
     }
 
     private ArrayList<Field> mFields = new ArrayList<Field>();
@@ -32,9 +39,13 @@ public class DefaultCondition {
         mFields = fields;
     }
 
-    public void addField(String value, String tag, String key) {
-        if (TextUtils.isEmpty(value) || TextUtils.isEmpty(key) || TextUtils.isEmpty(tag)) return;
-        mFields.add(new Field(key, tag, value));
+    public void addField(String field, String tag, String value) {
+        addField(field, tag, value, false);
+    }
+
+    public void addField(String field, String tag, String value, boolean skipEscape) {
+        if (TextUtils.isEmpty(field) || TextUtils.isEmpty(value) || TextUtils.isEmpty(tag)) return;
+        mFields.add(new Field(field, tag, value, skipEscape));
     }
 
     @Override
@@ -48,18 +59,18 @@ public class DefaultCondition {
         }
         int count = 0;
         StringBuilder sql = new StringBuilder("");
-        for (Field field :  getFields()) {
+        for (Field field : getFields()) {
             count++;
-            String key = field.getKey();
+            String fieldName = field.getField();
             String tag = field.getTag();
             String value = field.getValue();
 
-            if (key.equals(value)) {
+            if (fieldName.equals(value)) {
                 sql.append(value);
             } else {
-                sql.append(value);
+                sql.append(fieldName);
                 sql.append(tag);
-                sql.append(DatabaseUtils.sqlEscapeString(key));
+                sql.append(value);
             }
             if (count < getFields().size()) {
                 sql.append(" AND ");
@@ -70,22 +81,31 @@ public class DefaultCondition {
     }
 
     static public class Field {
-        private String key;
+        private String field;
         private String tag;
         private String value;
 
         public Field(String key, String tag, String value) {
-            setKey(key);
+            setField(key);
             setTag(tag);
+            setValue(DatabaseUtils.sqlEscapeString(value));
+        }
+
+        public Field(String key, String tag, String value, boolean skipEscape) {
+            setField(key);
+            setTag(tag);
+            if (!skipEscape) {
+                value = DatabaseUtils.sqlEscapeString(value);
+            }
             setValue(value);
         }
 
-        public String getKey() {
-            return key;
+        public String getField() {
+            return field;
         }
 
-        public void setKey(String key) {
-            this.key = key;
+        public void setField(String field) {
+            this.field = field;
         }
 
         public String getTag() {

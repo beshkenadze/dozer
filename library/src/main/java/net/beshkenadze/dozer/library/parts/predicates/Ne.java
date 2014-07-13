@@ -6,11 +6,11 @@ import net.beshkenadze.dozer.library.parts.DefaultCondition;
  * Created by Aleksandr Beshkenadze <beshkenadze@gmail.com> on 12.07.14.
  */
 public class Ne extends DefaultCondition {
-    public Ne(String target, String value) {
-        super(target, " != ", value);
+    public Ne(String field, String value) {
+        super(field, " != ", value);
     }
 
-    public static Ne from(String target, String value) {
-        return new Ne(target, value);
+    public static Ne from(String field, String value) {
+        return new Ne(field, value);
     }
 }

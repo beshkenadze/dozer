@@ -6,11 +6,11 @@ import net.beshkenadze.dozer.library.parts.DefaultCondition;
  * Created by Aleksandr Beshkenadze <beshkenadze@gmail.com> on 08.03.14.
  */
 public class Gte extends DefaultCondition {
-    public Gte(String target, String value) {
-        super(target, " >= ", value);
+    public Gte(String field, String value) {
+        super(field, " >= ", value);
     }
 
-    public static Gte from(String target, String value) {
-        return new Gte(target, value);
+    public static Gte from(String field, String value) {
+        return new Gte(field, value);
     }
 }
