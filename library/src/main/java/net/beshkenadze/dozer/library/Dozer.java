@@ -10,6 +10,11 @@ import net.beshkenadze.dozer.library.parts.Order;
 import net.beshkenadze.dozer.library.parts.Select;
 import net.beshkenadze.dozer.library.parts.Where;
 import net.beshkenadze.dozer.library.parts.predicates.Eq;
+import net.beshkenadze.dozer.library.parts.predicates.Gt;
+import net.beshkenadze.dozer.library.parts.predicates.Gte;
+import net.beshkenadze.dozer.library.parts.predicates.Lt;
+import net.beshkenadze.dozer.library.parts.predicates.Lte;
+import net.beshkenadze.dozer.library.parts.predicates.Ne;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -102,6 +107,26 @@ public class Dozer {
 
     public Dozer eq(String target, String value) {
         return where(Eq.from(target, value));
+    }
+
+    public Dozer ne(String target, String value) {
+        return where(Ne.from(target, value));
+    }
+
+    public Dozer lt(String target, String value) {
+        return where(Lt.from(target, value));
+    }
+
+    public Dozer gt(String target, String value) {
+        return where(Gt.from(target, value));
+    }
+
+    public Dozer gte(String target, String value) {
+        return where(Gte.from(target, value));
+    }
+
+    public Dozer lte(String target, String value) {
+        return where(Lte.from(target, value));
     }
 
     public Dozer whereOr(DefaultCondition... conditions) {
